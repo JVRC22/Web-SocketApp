@@ -24,14 +24,9 @@ export class PullingComponentComponent implements OnInit {
     this.personaService.getPersonas().subscribe(data => this.personas = data);
   }
 
-  crearPersona()
-  {
-    this.router.navigate(['propietario/crear'])
-  }
-
   editarPersona(id: number)
   {
-    this.router.navigate(['propietario/editar',id])
+    this.router.navigate(['modificar/',id])
   }
 
   deletePersona(id: number)

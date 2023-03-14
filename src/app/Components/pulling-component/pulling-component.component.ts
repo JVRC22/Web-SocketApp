@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { interval } from 'rxjs';
 import { Persona } from 'src/app/Interfaces/persona';
 import { PersonasService } from 'src/app/Services/personas.service';
 
@@ -18,6 +19,11 @@ export class PullingComponentComponent implements OnInit {
   ngOnInit()
   {
     this.getPersonas();
+
+    const secondsCounter = interval(5000);
+    secondsCounter.subscribe(n => {
+      this.getPersonas();
+    });
   }
 
   getPersonas() {

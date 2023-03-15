@@ -20,8 +20,9 @@ export class PullingComponentComponent implements OnInit {
   {
     this.getPersonas();
 
-    const secondsCounter = interval(5000);
+    const secondsCounter = interval(3000);
     secondsCounter.subscribe(n => {
+      console.log('Obteniendo datos de la API');
       this.getPersonas();
     });
   }

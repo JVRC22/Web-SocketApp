@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Persona } from 'src/app/Interfaces/persona';
 import { PersonasService } from 'src/app/Services/personas.service';
+import { WebSocketServiceService } from 'src/app/Services/web-socket-service.service';
 
 @Component({
   selector: 'app-web-socket-component',
@@ -11,12 +12,15 @@ import { PersonasService } from 'src/app/Services/personas.service';
 export class WebSocketComponentComponent {
   personas: Persona[] = [];
 
-  id: number =0 ;
+  id: number = 0;
 
-  constructor(private router:Router, private personaService:PersonasService) { }
+  constructor(private router:Router, private personaService:PersonasService, private webSocketService:WebSocketServiceService) { }
   
   ngOnInit()
   {
+    this.webSocketService.socket.on('new:persona', () => {
+      this.getPersonas();
+    })
     this.getPersonas();
   }
 

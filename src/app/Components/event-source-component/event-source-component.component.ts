@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Persona } from 'src/app/Interfaces/persona';
 import { PersonasService } from 'src/app/Services/personas.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+//import { EventSourcePolyfill } from 'event-source-polyfill';
+
 
 @Component({
   selector: 'app-event-source-component',
@@ -11,22 +15,20 @@ import { PersonasService } from 'src/app/Services/personas.service';
 export class EventSourceComponentComponent {
   personas: Persona[] = [];
 
-  id: number =0 ;
+  id: number = 0;
 
   constructor(private router:Router, private personaService:PersonasService) { }
   
   ngOnInit()
   {
-    let sse = new EventSource('http://127.0.0.1:3333/personas/eventos');
-
-  sse.addEventListener("notice", event => {
-    
-    console.log("se agrego uno estado")
     this.getPersonas();
-     
-  });
-  
-    
+
+    let sse = new EventSource(environment.API_URL + '/eventos');
+
+    sse.addEventListener('notice', (event: MessageEvent) => {
+      console.log(event.data);
+      this.getPersonas();
+    });
   }
 
   getPersonas() 

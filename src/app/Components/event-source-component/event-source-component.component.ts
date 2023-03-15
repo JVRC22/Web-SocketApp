@@ -17,10 +17,20 @@ export class EventSourceComponentComponent {
   
   ngOnInit()
   {
+    let sse = new EventSource('http://127.0.0.1:3333/personas/eventos');
+
+  sse.addEventListener("notice", event => {
+    
+    console.log("se agrego uno estado")
     this.getPersonas();
+     
+  });
+  
+    
   }
 
-  getPersonas() {
+  getPersonas() 
+  {
     this.personaService.getPersonas().subscribe(data => this.personas = data);
   }
 

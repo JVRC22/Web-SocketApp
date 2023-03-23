@@ -21,7 +21,7 @@ export class EventSourceComponentComponent {
   
   ngOnInit()
   {
-    this.getPersonas();
+    //this.getPersonas();
 
     let sse = new EventSource(environment.API_URL + '/eventos');
 

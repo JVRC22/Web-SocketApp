@@ -18,10 +18,11 @@ export class WebSocketComponentComponent {
   
   ngOnInit()
   {
+    this.getPersonas();
+    
     this.webSocketService.socket.on('new:persona', () => {
       this.getPersonas();
     })
-    this.getPersonas();
   }
 
   getPersonas() {

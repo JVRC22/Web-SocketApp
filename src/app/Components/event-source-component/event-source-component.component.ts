@@ -16,18 +16,35 @@ export class EventSourceComponentComponent {
   personas: Persona[] = [];
 
   id: number = 0;
+  eventSource: EventSource = new EventSource(environment.API_URL + '/stream');
 
   constructor(private router:Router, private personaService:PersonasService) { }
   
   ngOnInit()
   {
-    //this.getPersonas();
+    
+    this.getPersonas();
 
-    let sse = new EventSource(environment.API_URL + '/eventos');
+    this.eventSource.addEventListener('Persona', (event) => {
+      console.log('Evento persona recibido');
+      //MANERA 1
+        this.getPersonas();
+        console.log('Persona actualizada');
+       
+        //MANERA 2
+  /*  this.eventSource.addEventListener('Persona', (event) => {
+      console.log('Evento persona recibido');
+      const update_persona = JSON.parse(event.data);
+      const index = this.personas.findIndex((persona) => persona.id === update_persona.id);
 
-    sse.addEventListener('notice', (event: MessageEvent) => {
-      console.log(event.data);
-      this.getPersonas();
+      if (index > -1)
+      {
+        this.personas[index] = update_persona;
+      } else 
+      {
+        this.personas.push(update_persona);
+      }*/
+    
     });
   }
 
